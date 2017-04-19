@@ -664,6 +664,7 @@ def rms_fit_trj(
         rmsdfile=None,
         prefix='rmsfit_',
         mass_weighted=False,
+        weighted=None,
         tol_mass=0.1,
         strict=False,
         force=True,
@@ -705,6 +706,8 @@ def rms_fit_trj(
          prefix for autogenerating the new output filename
       *mass_weighted*
          do a mass-weighted RMSD fit
+      *mass_weighted*
+         Custom RMSD weighting vector
       *tol_mass*
          Reject match if the atomic masses for matched atoms differ by more than
          *tol_mass* [0.1]
@@ -792,6 +795,9 @@ def rms_fit_trj(
         weights = np.asarray(ref_atoms.masses, dtype=np.float64)
     else:
         weights = None
+
+    if weighted is not None:
+        weights = weighted
 
     # reference centre of mass system
     ref_com = ref_atoms.center_of_mass()
